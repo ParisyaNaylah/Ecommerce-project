@@ -62,7 +62,19 @@ jobs:
             -Dsonar.projectKey=ParisyaNaylah_Ecommerce-project
             -Dsonar.sources=src
             -Dsonar.tests=src
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov-report/index-lcov-report.xml
+            -Dsonar.inclusions=src/**/*.spec.ts,src/**/*.test.ts
+            -Dsonar.test.inclusions=src/**/*.spec.ts,src/**/*.test.ts
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.projectVersion=${{ github.sha }}
+            -Dsonar.pullrequest.key=${{ github.event.pull_request.number }}
+            -Dsonar.pullrequest.branch=${{ github.head_ref }}
+            -Dsonar.pullrequest.base=${{ github.base_ref }}
+            -Dsonar.pullrequest.provider=github
+            -Dsonar.pullrequest.github.repository=ParisyaNaylah/Ecommerce-project
+            -Dsonar.pullrequest.github.token=${{ secrets.GITHUB_TOKEN }}
+
+  # Job untuk build dan push Docker image
 
   build-and-push:
     runs-on: ubuntu-latest
