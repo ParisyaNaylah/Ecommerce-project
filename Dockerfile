@@ -4,7 +4,7 @@ WORKDIR /app
 # Menyalin semua file ke dalam container agar folder public dan src tersedia
 COPY . .
 # Menginstal dependensi berdasarkan file package-lock.json
-RUN npm ci
+RUN npm ci --verbose
 # Menjalankan proses build aplikasi React
 RUN npm run build
 
