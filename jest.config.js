@@ -7,7 +7,7 @@ module.exports = {
     "@testing-library/jest-dom/extend-expect"  // Memastikan toBeInTheDocument tersedia
   ],
   transform: {
-    "^.+\\.(js|jsx|ts|tsx)$": "babel-jest", // Jika menggunakan Babel untuk transformasi
+    "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",  // Menggunakan babel-jest untuk kompilasi
   },
   moduleFileExtensions: ["js", "jsx"],
 };

@@ -39,6 +39,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install Babel dependencies
+        run: npm install --save-dev @babel/core @babel/cli @babel/preset-env
+
       - name: Run ESLint
         run: npm run lint
         continue-on-error: true  # Jika ingin melanjutkan meskipun ada error di linting
