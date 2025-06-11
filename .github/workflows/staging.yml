@@ -25,6 +25,46 @@ jobs:
             -Dsonar.projectKey=ParisyaNaylah_Ecommerce-project
             -Dsonar.python.coverage.reportPaths=coverage.xml
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Atur sesuai versi Node.js yang kamu gunakan
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Run Jest Tests
+        run: |
+          npm test -- --coverage
+        continue-on-error: true  # Jika ingin melanjutkan meskipun ada error pada test
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Sesuaikan dengan versi Node.js yang kamu gunakan
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Run ESLint
+        run: |
+          npm run lint
+        continue-on-error: true  # Jika ingin melanjutkan meskipun ada error di linting
+
   build-and-push:
     runs-on: ubuntu-latest
     steps:
