@@ -1,68 +1,30 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { render, screen, fireEvent } from '@testing-library/react';
+import Login from './Login'; // Pastikan path ini sesuai dengan file Login.jsx
+import { BrowserRouter as Router } from 'react-router-dom'; // Untuk menangani routing
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    // Get user data from localStorage
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-
-    // Validate login
-    if (storedUser && storedUser.email === email && storedUser.password === password) {
-      navigate('/'); // Redirect to home page
-    } else {
-      setErrorMessage('Invalid credentials, please try again.');
-    }
-  };
-
-  return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full sm:w-96">
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-        {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
-        <form onSubmit={handleLogin}>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700">Email</label>
-            <input
-              type="email"
-              id="email"
-              className="w-full p-2 mt-2 border border-gray-300 rounded-lg"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="password" className="block text-gray-700">Password</label>
-            <input
-              type="password"
-              id="password"
-              className="w-full p-2 mt-2 border border-gray-300 rounded-lg"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-700"
-          >
-            Login
-          </button>
-        </form>
-        <p className="mt-4 text-center">
-          Don't have an account?{' '}
-          <a href="/signup" className="text-yellow-500">Sign up</a>
-        </p>
-      </div>
-    </div>
+test('renders login form and handles login', () => {
+  render(
+    <Router>
+      <Login />
+    </Router>
   );
-};
 
-export default Login;
+  // Cek apakah form login muncul
+  expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+  expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+  expect(screen.getByText(/login/i)).toBeInTheDocument();
+
+  // Masukkan email dan password
+  fireEvent.change(screen.getByLabelText(/email/i), {
+    target: { value: 'test@example.com' }
+  });
+  fireEvent.change(screen.getByLabelText(/password/i), {
+    target: { value: 'password123' }
+  });
+
+  // Submit form
+  fireEvent.click(screen.getByText(/login/i));
+
+  // Cek jika error message muncul (jika data tidak valid)
+  expect(screen.getByText(/invalid credentials, please try again/i)).toBeInTheDocument();
+});
