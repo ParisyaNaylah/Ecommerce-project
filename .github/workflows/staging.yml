@@ -60,7 +60,9 @@ jobs:
           args: >
             -Dsonar.organization=parisyanaylah
             -Dsonar.projectKey=ParisyaNaylah_Ecommerce-project
-            -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.sources=src
+            -Dsonar.tests=src
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov-report/index-lcov-report.xml
 
   build-and-push:
     runs-on: ubuntu-latest
