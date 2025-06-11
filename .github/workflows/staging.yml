@@ -34,7 +34,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16' # Atur sesuai versi Node.js yang kamu gunakan
+          node-version: '10' # Atur sesuai versi Node.js yang kamu gunakan
 
       - name: Install dependencies
         run: |
